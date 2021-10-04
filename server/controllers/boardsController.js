@@ -1,6 +1,25 @@
 const Board = require("../models/board");
+const List = require("../models/list");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+
+// get Board
+const getBoard = (req, res, next) => {
+  const id = req.params.id;
+  Board.findById(id)
+    .lean()
+    .then((board) =>
+      List.find({ boardId: id }).then((lists) => {
+        board.lists = lists;
+        res.json({
+          board,
+        });
+      })
+    )
+    .catch((err) => {
+      return next(new HttpError("Board not Found", 404));
+    });
+};
 
 const getBoards = (req, res, next) => {
   Board.find({}, "title _id createdAt updatedAt").then((boards) => {
@@ -13,10 +32,19 @@ const getBoards = (req, res, next) => {
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    Board.create(req.body.board)
+    // Board.create(req.body.board)
+    const board = new Board({
+      title: req.body.board.title,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    board
+      .save()
       .then((board) => {
         Board.find({ _id: board._id }, "title _id createdAt updatedAt").then(
-          (board) => res.json({ board })
+          (board) => {
+            res.json({ board });
+          }
         );
       })
       .catch((err) =>
@@ -29,3 +57,4 @@ const createBoard = (req, res, next) => {
 
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.getBoard = getBoard;
