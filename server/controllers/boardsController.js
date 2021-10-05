@@ -4,11 +4,13 @@ const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
 // get Board
-const getBoard = (req, res, next) => {
+const getBoard = async (req, res, next) => {
   const id = req.params.id;
-  Board.findById(id)
-    .populate("lists")
-    .then((board) => res.json(board))
+  await Board.findById(id)
+    .populate({ path: "lists", populate: { path: "cards" } })
+    .then((board) => {
+      res.json(board)
+    })
     .catch((err) => {
       return next(new HttpError("Board not Found", 404));
     });

@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
+import { fetchBoard } from "../../actions/BoardActions";
+
 const SingleBoard = () => {
+  const dispatch = useDispatch();
+  const boardId = useParams().id;
+
+  useEffect(() => {
+    dispatch(fetchBoard(boardId));
+  }, [dispatch, boardId])
+
+  const board = useSelector(state => state.boards.id = boardId);
+  console.log('board is', board)
   return (
     <>
-       <header>
+      <header>
         <ul>
           <li id="title">My Title</li>
           <li className="star-icon icon"></li>

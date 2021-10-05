@@ -7,17 +7,10 @@ const BoardSchema = new Schema({
     type: String,
     required: [true, "The Board title is required"],
   },
-  createdAt: {
-    type: Date,
-  },
-  updatedAt: {
-    type: Date,
-  },
-
   lists: [
     { type: Schema.Types.ObjectId, ref: "List" }
   ],
-});
+}, { timestamps: true });
 
 BoardSchema.set("toJSON", {
   transform: (document, returnedObject) => {

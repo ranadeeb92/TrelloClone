@@ -9,54 +9,48 @@ const CardSchema = new Schema({
     type: String,
     required: [true, "The Card title is required"],
   },
-  createdAt: {
-    type: Date,
-  },
-  updatedAt: {
-    type: Date,
-  },
-  dueDate: {
-    type: Date,
+  description: {
+    type: String,
   },
   labels: [
     { type: String }
   ],
-  description: {
-    type: String,
-  },
   listId: {
     type: Schema.Types.ObjectId,
     ref: 'List'
+  },
+  position: {
+    type: Number,
+  },
+  archived: {
+    type: Boolean,
+  },
+  dueDate: {
+    type: Date,
+  },
+  completed: {
+    type: Boolean,
   },
   boardId: {
     type: Schema.Types.ObjectId,
     ref: 'Board'
   },
-  position: {
-    type: Number,
-  },
-  commentsCount: {
-    type: Number,
-  },
-  comments: [
-    {
-      type: String,
-      // type: Schema.Types.ObjectId, ref: "Comment" 
-    }
-  ],
-  actions: [
-    {
-      type: String,
-      // type: Schema.Types.ObjectId, ref: "Action" 
-    }
-  ],
-  completed: {
-    type: Boolean,
-  },
-  archived: {
-    type: Boolean,
-  }
-});
+  // comments: [
+  //   {
+  //     type: String,
+  //     // type: Schema.Types.ObjectId, ref: "Comment" 
+  //   }
+  // ],
+  // actions: [
+  //   {
+  //     type: Schema.Types.ObjectId,
+  //     // type: Schema.Types.ObjectId, ref: "Action" 
+  //   }
+  // // ],
+  // commentsCount: {
+  //   type: Number,
+  // },
+}, { timestamps: true });
 
 CardSchema.set("toJSON", {
   transform: (document, returnedObject) => {

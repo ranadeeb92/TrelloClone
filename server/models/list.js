@@ -12,27 +12,21 @@ const ListSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Board'
   },
-  createdAt: {
-    type: Date,
-  },
-  updatedAt: {
-    type: Date,
-  },
   position: {
     type: Number,
   },
   cards: [
     { type: Schema.Types.ObjectId, ref: "Card" }
   ],
-});
+}, { timestamps: true });
 
-// BoardSchema.set("toJSON", {
-//   transform: (document, returnedObject) => {
-//     returnedObject.id = returnedObject._id.toString();
-//     delete returnedObject._id;
-//     delete returnedObject.__v;
-//   },
-// });
+ListSchema.set("toJSON", {
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString();
+    delete returnedObject._id;
+    delete returnedObject.__v;
+  },
+});
 
 const List = mongoose.model("List", ListSchema);
 

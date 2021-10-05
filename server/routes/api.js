@@ -1,7 +1,10 @@
 const express = require("express");
 const router = express.Router();
 const boardsController = require("../controllers/boardsController");
-const { validateBoard } = require("../validators/validators");
+const listsController = require("../controllers/listsController");
+const { validateBoard, validateList } = require("../validators/validators");
+
+router.post("/lists", validateList, listsController.createList);
 
 router.get("/boards", boardsController.getBoards);
 
