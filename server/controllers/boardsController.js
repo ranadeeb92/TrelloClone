@@ -7,15 +7,8 @@ const { validationResult } = require("express-validator");
 const getBoard = (req, res, next) => {
   const id = req.params.id;
   Board.findById(id)
-    .lean()
-    .then((board) =>
-      List.find({ boardId: id }).then((lists) => {
-        board.lists = lists;
-        res.json({
-          board,
-        });
-      })
-    )
+    .populate("lists")
+    .then((board) => res.json(board))
     .catch((err) => {
       return next(new HttpError("Board not Found", 404));
     });

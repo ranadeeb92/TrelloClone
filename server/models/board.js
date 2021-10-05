@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const List = require("./list");
 
 const BoardSchema = new Schema({
   title: {
@@ -12,6 +13,10 @@ const BoardSchema = new Schema({
   updatedAt: {
     type: Date,
   },
+
+  lists: [
+    { type: Schema.Types.ObjectId, ref: "List" }
+  ],
 });
 
 BoardSchema.set("toJSON", {
@@ -21,6 +26,7 @@ BoardSchema.set("toJSON", {
     delete returnedObject.__v;
   },
 });
+
 const Board = mongoose.model("Board", BoardSchema);
 
 module.exports = Board;

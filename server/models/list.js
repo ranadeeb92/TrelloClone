@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Board = require("./board");
+const Card = require("./card");
 
 const ListSchema = new Schema({
   title: {
@@ -8,6 +10,7 @@ const ListSchema = new Schema({
   },
   boardId: {
     type: Schema.Types.ObjectId,
+    ref: 'Board'
   },
   createdAt: {
     type: Date,
@@ -18,9 +21,9 @@ const ListSchema = new Schema({
   position: {
     type: Number,
   },
-  cards: {
-    type: Array,
-  },
+  cards: [
+    { type: Schema.Types.ObjectId, ref: "Card" }
+  ],
 });
 
 // BoardSchema.set("toJSON", {
