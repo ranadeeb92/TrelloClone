@@ -5,7 +5,11 @@ export default function cards(state = [], action) {
       return state.concat(newCard);
     }
     case "FETCH_BOARD_SUCCESS": {
-      return action.board.lists.cards
+      let newCards = action.board.lists.reduce((acc, list) => {
+        acc.push(...list.cards);
+        return acc;
+      }, []);
+      return newCards;
     }
     default:
       return state;

@@ -5,7 +5,12 @@ export default function lists(state = [], action) {
       return state.concat(newList);
     }
     case "FETCH_BOARD_SUCCESS": {
-      return action.board.lists
+      let newLists = action.board.lists.map((list) => {
+        let newlist = { ...list };
+        delete newlist.cards;
+        return newlist;
+      });
+      return newLists;
     }
     default:
       return state;

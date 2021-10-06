@@ -20,14 +20,14 @@ export function createBoardSuccess(board) {
 export function fetchBoards() {
   return function (dispatch) {
     dispatch(fetchBoardsRequest());
-    apiClient.getBoards(data => dispatch(fetchBoardsSuccess(data.boards)));
+    apiClient.getBoards((data) => dispatch(fetchBoardsSuccess(data.boards)));
   };
 }
 
 export function createBoard(board, callback) {
   return function (dispatch) {
     dispatch(createBoardRequest());
-    apiClient.createBoard(board, data => {
+    apiClient.createBoard(board, (data) => {
       dispatch(createBoardSuccess(data.board));
 
       if (callback) {
@@ -40,12 +40,14 @@ export function createBoard(board, callback) {
 export function fetchBoard(boardId) {
   return function (dispatch) {
     dispatch(fetchBoardRequest(boardId));
-    apiClient.getBoard(boardId, (data) => dispatch(fetchBoardSuccess(data.board)));
-  }
+    apiClient.getBoard(boardId, (data) => {
+      dispatch(fetchBoardSuccess(data));
+    });
+  };
 }
 
 export function fetchBoardRequest(boardId) {
-  return { type: types.FETCH_BOARD_REQUEST, boardId }
+  return { type: types.FETCH_BOARD_REQUEST, boardId };
 }
 
 export function fetchBoardSuccess(board) {

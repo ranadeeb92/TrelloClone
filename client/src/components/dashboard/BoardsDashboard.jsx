@@ -7,6 +7,7 @@ import CreateBoardTile from "./CreateBoardTile";
 const BoardsDashboard = (props) => {
   const boards = useSelector((state) => state.boards);
 
+  console.log("inside dashboard", boards);
   const boardTiles = boards.map((board) => {
     return <BoardTile key={board._id} title={board.title} id={board._id} />;
   });
