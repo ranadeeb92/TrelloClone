@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const boardsController = require("../controllers/boardsController");
 const listsController = require("../controllers/listsController");
-const { validateBoard, validateList } = require("../validators/validators");
+const { validateBoard, validateList, validateListUpdate } = require("../validators/validators");
 
 router.post("/lists", validateList, listsController.createList);
+
+router.put("/lists/:id", validateListUpdate, listsController.updateList)
 
 router.get("/boards", boardsController.getBoards);
 

@@ -1,14 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import CardsContainer from "./CardsContainer";
+import { useDispatch } from "react-redux";
+import { updateList } from "../../actions/ListActions";
 
 const List = ({ list }) => {
+  const dispatch = useDispatch();
+  const [title, setTitle] = useState(list.title);
+
+  const handleUpdate = () => {
+    dispatch(updateList(title, list._id));
+  }
+
+  const handleEnter = (e) => {
+    if (e.key === 'Enter') {
+      e.target.blur();
+    }
+  }
+
   return (
     <div className="list-wrapper">
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{list.title}</p>
+            <input type="text" className="list-title" value={title} onChange={(e) => setTitle(e.target.value)} onBlur={(e) => handleUpdate(e)} onKeyDown={e => handleEnter(e)} />
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>

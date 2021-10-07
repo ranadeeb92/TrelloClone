@@ -6,16 +6,16 @@ import { createList } from "../../actions/ListActions";
 const AddNewList = () => {
   const dispatch = useDispatch();
   const [selected, setSelected] = useState(false);
-  const [titleName, setTitleName] = useState("");
+  const [title, setTitle] = useState("");
   const boardId = useParams().id;
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (titleName === "") return;
+    if (title === "") return;
 
-    dispatch(createList(titleName, boardId, () => {
+    dispatch(createList(title, boardId, () => {
       setSelected("false");
-      setTitleName("");
+      setTitle("");
     }))
     // get the text from the input
     // if its empty, do nothing
@@ -27,7 +27,7 @@ const AddNewList = () => {
   return (
     <div id="new-list" className={`new-list ${selected ? "selected" : ""}`}>
       <span onClick={() => setSelected(true)}>Add a list...</span>
-      <input type="text" placeholder="Add a list..." value={titleName} onChange={(e) => setTitleName(e.target.value)} />
+      <input type="text" placeholder="Add a list..." value={title} onChange={(e) => setTitle(e.target.value)} />
       <div>
         <input type="submit" className="button" value="Save" onClick={handleSubmit} />
         <i className="x-icon icon" onClick={() => setSelected(false)}></i>
