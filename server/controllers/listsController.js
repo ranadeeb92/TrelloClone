@@ -21,8 +21,7 @@ const createList = (req, res, next) => {
           boardId,
           { $push: { lists: list._id } },
           { new: true }
-        );
-        res.json({ list });
+        ).then(_ => res.json({ list }));
       })
       .catch((err) =>
         next(new HttpError("Creating list failed, please try again", 500))

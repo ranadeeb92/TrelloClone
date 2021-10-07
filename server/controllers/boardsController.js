@@ -27,11 +27,8 @@ const getBoards = (req, res, next) => {
 const createBoard = (req, res, next) => {
   const errors = validationResult(req);
   if (errors.isEmpty()) {
-    // Board.create(req.body.board)
     const board = new Board({
       title: req.body.board.title,
-      createdAt: new Date(),
-      updatedAt: new Date(),
     });
     board
       .save()
