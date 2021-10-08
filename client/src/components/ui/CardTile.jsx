@@ -1,6 +1,12 @@
 import React from "react";
+import { useHistory } from "react-router";
 
-const CardTile = ({ title }) => {
+const CardTile = ({ card }) => {
+  let history = useHistory();
+
+  const handleClick = () => {
+    history.push(history.location.pathname + `/cards/${card._id}`);
+  };
   return (
     <div className="card-background">
       <div className="card ">
@@ -12,7 +18,9 @@ const CardTile = ({ title }) => {
           <div className="card-label orange colorblindable"></div>
           <div className="card-label blue colorblindable"></div>
           <div className="card-label purple colorblindable"></div>
-          <p>{title}</p>
+          <div onClick={handleClick}>
+            <p>{card.title}</p>
+          </div>
         </div>
         <div className="card-icons">
           <i className="clock-icon sm-icon overdue-recent completed">

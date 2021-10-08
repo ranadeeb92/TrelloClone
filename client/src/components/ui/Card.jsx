@@ -1,15 +1,31 @@
 import React from "react";
+import { useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router";
+
+import LabelsContainer from "./LabelsContainer";
+
 const Card = () => {
+  const history = useHistory();
+  const cardId = useParams().cardId;
+  const boardId = useParams().id;
+  const card = useSelector((state) =>
+    state.cards.find((card) => card._id === cardId)
+  );
   return (
     <div id="modal-container">
-      <div className="screen"></div>
+      <div
+        className="screen"
+        onClick={() => history.push(`/boards/${boardId}`)}
+      ></div>
       <div id="modal">
-        <i className="x-icon icon close-modal"></i>
+        <i
+          className="x-icon icon close-modal"
+          onClick={() => history.push(`/boards/${boardId}`)}
+        ></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
           <textarea className="list-title" style={{ height: "45px" }}>
-            Cards do many cool things. Click on this card to open it and learn
-            more...
+            {card.title}
           </textarea>
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
@@ -20,30 +36,7 @@ const Card = () => {
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <li className="labels-section">
-                  <h3>Labels</h3>
-                  <div className="member-container">
-                    <div className="green label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="yellow label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="orange label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="blue label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="purple label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="red label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <i className="plus-icon sm-icon"></i>
-                  </div>
-                </li>
+                <LabelsContainer labels={card.labels} />
                 <li className="due-date-section">
                   <h3>Due Date</h3>
                   <div id="dueDateDisplay" className="overdue completed">
@@ -53,7 +46,8 @@ const Card = () => {
                       className="checkbox"
                       checked=""
                     />
-                    Aug 4 at 10:42 AM <span>(past due)</span>
+                    {card.dueDate}
+                    <span>(past due)</span>
                   </div>
                 </li>
               </ul>
@@ -62,9 +56,7 @@ const Card = () => {
                 <span id="description-edit" className="link">
                   Edit
                 </span>
-                <p className="textarea-overlay">
-                  Cards have a symbol to indicate if they contain a description.
-                </p>
+                <p className="textarea-overlay">{card.description}</p>
                 <p id="description-edit-options" className="hidden">
                   You have unsaved edits on this field.{" "}
                   <span className="link">View edits</span> -{" "}
@@ -147,8 +139,9 @@ const Card = () => {
                     <div className="card-member small-size">VR</div>
                   </div>
                   <p>
-                    <span className="member-name">Victor Reyes</span> changed the
-                    background of this board <small>yesterday at 4:53 PM</small>
+                    <span className="member-name">Victor Reyes</span> changed
+                    the background of this board{" "}
+                    <small>yesterday at 4:53 PM</small>
                   </p>
                 </li>
                 <li className="activity-comment">

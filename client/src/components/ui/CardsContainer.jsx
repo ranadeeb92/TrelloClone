@@ -10,7 +10,7 @@ const CardsContainer = ({ listId }) => {
   return (
     <div id="cards-container" data-id="list-1-cards">
       {listCards.map((card) => {
-        return <CardTile key={card._id} {...card} />;
+        return <CardTile key={card._id} card={card} />;
       })}
     </div>
   );

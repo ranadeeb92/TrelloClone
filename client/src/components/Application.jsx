@@ -18,8 +18,10 @@ const Application = () => {
   return (
     <div>
       <TopNav />
+
       <Route path="/" exact component={BoardsDashboardContainer} />
-      <Route path="/boards/:id" exact component={SingleBoard} />
+      <Route path="/boards/:id" component={SingleBoard} />
+      <Route path="/boards/:id/cards/:cardId" component={Card} />
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
       <Route path="/ui/cardArchived" component={CardArchived} />

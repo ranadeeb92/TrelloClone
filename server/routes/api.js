@@ -26,5 +26,6 @@ router.get("/cards/:id", cardsController.getCard);
 router.use(findList);
 
 router.post("/cards", validateCard, cardsController.createCard);
+router.put("/cards/:id", validateCard, cardsController.updateCard);
 
 module.exports = router;
