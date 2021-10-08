@@ -38,18 +38,18 @@ const apiClient = {
       .get(routes.BOARDS_INDEX_URL + `/${boardId}`)
       .then(unwrapData)
       .then(callback)
-      .catch(logError)
+      .catch(logError);
   },
 
   createList: function (title, boardId, callback) {
     return axios
       .post(routes.CREATE_LIST_URL, {
         boardId,
-        list: { title }
+        list: { title },
       })
       .then(unwrapData)
       .then(callback)
-      .catch(logError)
+      .catch(logError);
   },
 
   updateList: function (title, listId, callback) {
@@ -57,8 +57,19 @@ const apiClient = {
       .put(routes.UPDATE_LIST_URL + `/${listId}`, { title })
       .then(unwrapData)
       .then(callback)
-      .catch(logError)
-  }
+      .catch(logError);
+  },
+
+  createCard: function (title, listId, callback) {
+    return axios
+      .post(routes.CREATE_CARD_URL, {
+        listId,
+        card: { title },
+      })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
 };
 
 export default apiClient;

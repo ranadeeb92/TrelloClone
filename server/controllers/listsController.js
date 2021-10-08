@@ -21,7 +21,7 @@ const createList = (req, res, next) => {
           boardId,
           { $push: { lists: list._id } },
           { new: true }
-        ).then(_ => res.json({ list }));
+        ).then((_) => res.json({ list }));
       })
       .catch((err) =>
         next(new HttpError("Creating list failed, please try again", 500))
@@ -33,15 +33,17 @@ const createList = (req, res, next) => {
 
 const updateList = (req, res, next) => {
   const errors = validationResult(req);
-  const listId = req.params.id
+  const listId = req.params.id;
   if (errors.isEmpty()) {
     List.findByIdAndUpdate(listId, { title: req.body.title }, { new: true })
-      .then(list => res.json({ list }))
-      .catch(err => next(new HttpError("Updating the list failed, please try again", 500)));
+      .then((list) => res.json({ list }))
+      .catch((err) =>
+        next(new HttpError("Updating the list failed, please try again", 500))
+      );
   } else {
     return next(new HttpError("The input field is empty.", 404));
   }
-}
+};
 
 exports.createList = createList;
 exports.updateList = updateList;
