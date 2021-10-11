@@ -1,4 +1,3 @@
-const Board = require("../models/board");
 const List = require("../models/list");
 const Card = require("../models/card");
 const position = require("../helpers/position");
