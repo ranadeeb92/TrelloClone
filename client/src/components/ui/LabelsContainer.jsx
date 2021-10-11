@@ -6,7 +6,7 @@ const LabelsContainer = ({ labels }) => {
     <li className="labels-section">
       <h3>Labels</h3>
       {labels.map((label, index) => {
-        return <Label key={index} label={label} />;
+        return <Label key={index * Math.random()} label={label} />;
       })}
       <div className="member-container">
         <i className="plus-icon sm-icon"></i>

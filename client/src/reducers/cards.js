@@ -11,6 +11,9 @@ export default function cards(state = [], action) {
       }, []);
       return newCards;
     }
+    case "UPDATE_CARD_SUCCESS": {
+      return state.map(c => c._id === action.card._id ? action.card : c);
+    }
     default:
       return state;
   }

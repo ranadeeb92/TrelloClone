@@ -20,3 +20,23 @@ export function createCard(title, listId, callback) {
     });
   };
 }
+
+export function updateCardRequest() {
+  return { type: types.UPDATE_CARD_REQUEST };
+}
+
+export function updateCardSuccess(card) {
+  return { type: types.UPDATE_CARD_SUCCESS, card };
+}
+
+export function updateCard(card, cardId, callback) {
+  return (dispatch) => {
+    dispatch(updateCardRequest());
+    apiClient.updateCard(card, cardId, (data) => {
+      dispatch(updateCardSuccess(data.card));
+      if (callback) {
+        callback(data.card);
+      }
+    });
+  }
+}

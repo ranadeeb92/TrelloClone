@@ -1,16 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
+import { updateCard } from "../../actions/CardActions";
 
 import LabelsContainer from "./LabelsContainer";
 
 const Card = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const cardId = useParams().cardId;
   const boardId = useParams().id;
   const card = useSelector((state) =>
     state.cards.find((card) => card._id === cardId)
   );
+
+  const [title, setTitle] = useState(card.title);
+
+  const handleUpdateCard = () => {
+    const updatedCard = { ...card, title }
+    dispatch(updateCard(updatedCard, cardId));
+  }
+
   return (
     <div id="modal-container">
       <div
@@ -24,8 +34,8 @@ const Card = () => {
         ></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            {card.title}
+          <textarea className="list-title" style={{ height: "45px" }} onChange={(e) => setTitle(e.target.value)} onBlur={handleUpdateCard}>
+            {title}
           </textarea>
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
