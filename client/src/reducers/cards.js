@@ -6,7 +6,13 @@ export default function cards(state = [], action) {
     }
     case "FETCH_BOARD_SUCCESS": {
       let newCards = action.board.lists.reduce((acc, list) => {
-        acc.push(...list.cards);
+        const copiedCards = list.cards.map(c => {
+          let card = { ...c };
+          delete card.comments;
+          delete card.actions;
+          return card;
+        })
+        acc.push(...copiedCards);
         return acc;
       }, []);
       return newCards;
