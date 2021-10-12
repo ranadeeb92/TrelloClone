@@ -11,7 +11,7 @@ const SingleBoard = () => {
   const pathId = useParams().id;
   let boardId;
 
-  //let cards = useSelector((state) => state.cards);
+  // let cards = useSelector((state) => state.cards);
 
   // if (pathName.includes("boards")) {
   //   boardId = pathId;
@@ -37,14 +37,6 @@ const SingleBoard = () => {
   // useEffect(() => {
   //   dispatch(fetchBoard(boardId));
   // }, [dispatch, boardId]);
-
-  // let boardId = useSelector((state) => {
-  //   if (pathName.includes("boards")) {
-  //     return pathId;
-  //   } else {
-  //     return state.cards.find((card) => card._id === pathId).boardId;
-  //   }
-  // });
 
   const board = useSelector((state) =>
     state.boards.filter((b) => b._id === boardId)

@@ -4,6 +4,7 @@ import { useParams, useHistory } from "react-router";
 //import { fetchCard } from "../../actions/CardActions";
 
 import ActivityContainer from "./ActivityContainer";
+import CardDescription from "./CardDescription";
 import CardTitle from "./CardTitle";
 
 import LabelsContainer from "./LabelsContainer";
@@ -63,18 +64,7 @@ const Card = () => {
                   </div>
                 </li>
               </ul>
-              <form className="description">
-                <p>Description</p>
-                <span id="description-edit" className="link">
-                  Edit
-                </span>
-                <p className="textarea-overlay">{card.description}</p>
-                <p id="description-edit-options" className="hidden">
-                  You have unsaved edits on this field.{" "}
-                  <span className="link">View edits</span> -{" "}
-                  <span className="link">Discard</span>
-                </p>
-              </form>
+              <CardDescription card={card} />
             </li>
             <li className="comment-section">
               <h2 className="comment-icon icon">Add Comment</h2>
