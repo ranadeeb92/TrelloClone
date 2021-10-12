@@ -1,24 +1,28 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router";
-import { updateCard } from "../../actions/CardActions";
+//import { fetchCard } from "../../actions/CardActions";
+
 import ActivityContainer from "./ActivityContainer";
+import CardTitle from "./CardTitle";
 
 import LabelsContainer from "./LabelsContainer";
 
 const Card = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  //const dispatch = useDispatch();
   const id = useParams().id;
-  const card = useSelector((state) =>
-    state.cards.find((card) => card._id === id)
-  );
 
-  const [title, setTitle] = useState(card.title);
+  const card = useSelector((state) => {
+    return state.cards.find((card) => card._id === id);
+  });
 
-  const handleUpdateCard = () => {
-    const updatedCard = { ...card, title }
-    dispatch(updateCard(updatedCard, id));
+  // useEffect(() => {
+  //   dispatch(fetchCard(id));
+  // }, [dispatch, id]);
+
+  if (!card) {
+    return null;
   }
 
   return (
@@ -34,9 +38,7 @@ const Card = () => {
         ></i>
         <header>
           <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }} onChange={(e) => setTitle(e.target.value)} onBlur={handleUpdateCard}>
-            {title}
-          </textarea>
+          <CardTitle card={card} />
           <p>
             in list <a className="link">Stuff to try (this is a list)</a>
             <i className="sub-icon sm-icon"></i>

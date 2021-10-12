@@ -1,6 +1,27 @@
 import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
 
+export function fetchCardRequest() {
+  return { type: types.FETCH_CARD_REQUEST };
+}
+
+export function fetchCardSuccess(card) {
+  return { type: types.FETCH_CARD_SUCCESS, card };
+}
+
+export function fetchCard(cardId, callback) {
+  return (dispatch) => {
+    dispatch(fetchCardRequest());
+    apiClient.getCard(cardId, (data) => {
+      console.log(data.card);
+      dispatch(fetchCardSuccess(data.card));
+      if (callback) {
+        callback(data.card);
+      }
+    });
+  };
+}
+
 export function createCardRequest() {
   return { type: types.CREATE_CARD_REQUEST };
 }
@@ -38,5 +59,5 @@ export function updateCard(card, cardId, callback) {
         callback(data.card);
       }
     });
-  }
+  };
 }

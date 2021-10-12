@@ -6,20 +6,23 @@ export default function cards(state = [], action) {
     }
     case "FETCH_BOARD_SUCCESS": {
       let newCards = action.board.lists.reduce((acc, list) => {
-        const copiedCards = list.cards.map(c => {
+        const copiedCards = list.cards.map((c) => {
           let card = { ...c };
           delete card.comments;
           delete card.actions;
           return card;
-        })
+        });
         acc.push(...copiedCards);
         return acc;
       }, []);
       return newCards;
     }
     case "UPDATE_CARD_SUCCESS": {
-      return state.map(c => c._id === action.card._id ? action.card : c);
+      return state.map((c) => (c._id === action.card._id ? action.card : c));
     }
+    // case "FETCH_CARD_SUCCESS": {
+    //   return state.concat(action.card);
+    // }
     default:
       return state;
   }

@@ -21,7 +21,7 @@ const Application = () => {
 
       <Route path="/" exact component={BoardsDashboardContainer} />
       <Route path="/(boards|cards)/:id" component={SingleBoard} />
-      <Route path="/cardsa/:id" component={Card} />
+      <Route path="/cards/:id" component={Card} />
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
       <Route path="/ui/cardArchived" component={CardArchived} />
