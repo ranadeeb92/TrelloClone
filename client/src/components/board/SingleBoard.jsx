@@ -2,8 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router";
 import { fetchBoard } from "../../actions/BoardActions";
-import { fetchCard } from "../../actions/CardActions";
-import ListContainer from "./ListContainer";
+import ListContainer from "../list/ListContainer";
 const SingleBoard = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -11,32 +10,21 @@ const SingleBoard = () => {
   const pathId = useParams().id;
   let boardId;
 
-  // let cards = useSelector((state) => state.cards);
-
-  // if (pathName.includes("boards")) {
-  //   boardId = pathId;
-  // } else {
-  //   boardId = cards.find((c) => c._id === pathId).boardId;
-  // }
+  const cards = useSelector(state => state.cards);
+  if (pathName.includes("boards")) {
+    boardId = pathId;
+  } else {
+    const card = cards.find(c => c._id === pathId);
+    if (card) {
+      boardId = card.boardId;
+    }
+  }
 
   useEffect(() => {
-    if (pathName.includes("boards")) {
-      boardId = pathId;
-      dispatch(fetchBoard(pathId));
-    } else {
-      dispatch(
-        fetchCard(pathId, (card) => {
-          dispatch(fetchBoard(card.boardId));
-          boardId = card.boardId;
-        })
-      );
+    if (boardId) {
+      dispatch(fetchBoard(boardId));
     }
-    ``;
-  }, [dispatch]);
-
-  // useEffect(() => {
-  //   dispatch(fetchBoard(boardId));
-  // }, [dispatch, boardId]);
+  }, [dispatch, boardId]);
 
   const board = useSelector((state) =>
     state.boards.filter((b) => b._id === boardId)

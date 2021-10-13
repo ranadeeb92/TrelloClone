@@ -2,11 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const CardTile = ({ card }) => {
-  // let history = useHistory();
-
-  // const handleClick = () => {
-  //   history.push(history.location.pathname + `/cards/${card._id}`);
-  // };
   return (
     <Link to={`/cards/${card._id}`}>
       <div className="card-background">

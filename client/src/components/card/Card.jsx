@@ -1,26 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router";
-//import { fetchCard } from "../../actions/CardActions";
-
-import ActivityContainer from "./ActivityContainer";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCard } from "../../actions/CardActions";
+import ActivityContainer from "../../activity/ActivityContainer";
 import CardDescription from "./CardDescription";
 import CardTitle from "./CardTitle";
-
-import LabelsContainer from "./LabelsContainer";
+import ArchivedBanner from "./ArchivedBanner";
+import LabelsContainer from "../label/LabelsContainer";
+import ArchiveButton from "./ArchiveButton";
+import DeleteButton from "./DeleteButton";
 
 const Card = () => {
   const history = useHistory();
-  //const dispatch = useDispatch();
   const id = useParams().id;
-
+  const dispatch = useDispatch();
   const card = useSelector((state) => {
     return state.cards.find((card) => card._id === id);
   });
 
-  // useEffect(() => {
-  //   dispatch(fetchCard(id));
-  // }, [dispatch, id]);
+  useEffect(() => {
+    dispatch(fetchCard(id));
+  }, [dispatch, id]);
 
   if (!card) {
     return null;
@@ -28,15 +28,12 @@ const Card = () => {
 
   return (
     <div id="modal-container">
-      <div
-        className="screen"
-        onClick={() => history.push(`/boards/${card.boardId}`)}
-      ></div>
+      <div className="screen" onClick={() => history.push(`/boards/${card.boardId}`)} />
       <div id="modal">
-        <i
-          className="x-icon icon close-modal"
+        <i className="x-icon icon close-modal"
           onClick={() => history.push(`/boards/${card.boardId}`)}
-        ></i>
+        />
+        {card.archived ? <ArchivedBanner /> : null}
         <header>
           <i className="card-icon icon .close-modal"></i>
           <CardTitle card={card} />
@@ -131,9 +128,7 @@ const Card = () => {
               <i className="check-icon sm-icon"></i>
             </li>
             <hr />
-            <li className="archive-button">
-              <i className="file-icon sm-icon "></i>Archive
-            </li>
+            {card.archived ? <DeleteButton /> : <ArchiveButton card={card} />}
           </ul>
           <ul className="light-list">
             <li className="not-implemented">Share and more...</li>

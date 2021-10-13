@@ -3,9 +3,6 @@ import React from 'react';
 import ActivityComment from './ActivityComment';
 
 function ActivityContainer() {
-  // const cardId = useParams().cardId;
-  // const comments = useState(state => state.comments.filter(c => c.cardId == cardId));
-  // console.log(comments)
   return (
     <li className="activity-section">
       <h2 className="activity-icon icon">Activity</h2>

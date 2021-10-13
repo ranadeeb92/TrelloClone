@@ -20,9 +20,10 @@ export default function cards(state = [], action) {
     case "UPDATE_CARD_SUCCESS": {
       return state.map((c) => (c._id === action.card._id ? action.card : c));
     }
-    // case "FETCH_CARD_SUCCESS": {
-    //   return state.concat(action.card);
-    // }
+    case "FETCH_CARD_SUCCESS": {
+      const newState = state.map(c => c._id === action.card._id ? action.card : c);
+      return newState
+    }
     default:
       return state;
   }

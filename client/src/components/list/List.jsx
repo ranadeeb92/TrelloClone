@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import CardsContainer from "./CardsContainer";
+import CardsContainer from "../card/CardsContainer";
 import { useDispatch } from "react-redux";
 import { updateList } from "../../actions/ListActions";
-import AddNewCard from "./AddNewCard";
+import AddNewCard from "../card/AddNewCard";
 
 const List = ({ list }) => {
   const dispatch = useDispatch();
