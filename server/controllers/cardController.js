@@ -3,11 +3,17 @@ const Card = require("../models/card");
 const position = require("../helpers/position");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+const Comment = require("../models/comment");
 
 const getCard = (req, res, next) => {
   const id = req.params.id;
   Card.findById(id)
-    .then((card) => res.json({ card }))
+    .populate({
+      path: "comments"
+    })
+    .then((card) => {
+      res.json({ card })
+    })
     .catch((err) => next(new HttpError("Card not found", 404)));
 };
 

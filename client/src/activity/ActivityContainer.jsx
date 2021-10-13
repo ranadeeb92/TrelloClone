@@ -1,8 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
 import ActivityComment from './ActivityComment';
 
 function ActivityContainer() {
+  const cardId = useParams().cardId;
+  const comments = useSelector(state => state.comments.filter(c => c.cardId === cardId));
+
   return (
     <li className="activity-section">
       <h2 className="activity-icon icon">Activity</h2>
@@ -10,7 +15,7 @@ function ActivityContainer() {
         <li className="not-implemented">Show Details</li>
       </ul>
       <ul className="modal-activity-list">
-        {<ActivityComment />}
+        {comments.map(c => <ActivityComment key={c._id} comment={c} />)}
         <li>
           <div className="member-container">
             <div className="card-member small-size">VR</div>

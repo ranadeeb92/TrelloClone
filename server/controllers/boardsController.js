@@ -2,12 +2,13 @@ const Board = require("../models/board");
 const List = require("../models/list");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+const Card = require("../models/card");
+const Comment = require("../models/comment");
 
 // get Board
 const getBoard = async (req, res, next) => {
   const id = req.params.id;
-  await Board.findById(id)
-    .populate({ path: "lists", populate: { path: "cards" } })
+  await Board.findById(id).populate([{ path: "lists", populate: { path: "cards" } }])
     .then((board) => {
       res.json(board)
     })

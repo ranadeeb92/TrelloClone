@@ -3,10 +3,12 @@ const Schema = mongoose.Schema;
 const Card = require("./card");
 
 const CommentSchema = new Schema({
-  text: { type: String },
+  text: {
+    type: String
+  },
   cardId: {
     type: Schema.Types.ObjectId,
-    ref: "Card"
+    ref: "Card",
   },
 }, { timestamps: true });
 

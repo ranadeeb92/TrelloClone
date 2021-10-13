@@ -21,8 +21,16 @@ export default function cards(state = [], action) {
       return state.map((c) => (c._id === action.card._id ? action.card : c));
     }
     case "FETCH_CARD_SUCCESS": {
+      if (state.length === 0) {
+        return [action.card];
+      }
       const newState = state.map(c => c._id === action.card._id ? action.card : c);
-      return newState
+      return newState;
+    }
+
+    case "DELETE_CARD_SUCCESS": {
+      const newState = state.filter(c => c._id !== action.card._id);
+      return newState;
     }
     default:
       return state;

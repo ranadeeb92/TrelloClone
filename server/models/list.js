@@ -16,7 +16,10 @@ const ListSchema = new Schema(
     position: {
       type: Number,
     },
-    cards: [{ type: Schema.Types.ObjectId, ref: "Card" }],
+    cards: [{
+      type: Schema.Types.ObjectId,
+      ref: "Card"
+    }],
   },
   { timestamps: true }
 );

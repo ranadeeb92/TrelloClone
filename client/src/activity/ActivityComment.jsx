@@ -1,6 +1,7 @@
 import React from 'react';
 
-const ActivityComment = () => {
+const ActivityComment = ({ comment }) => {
+
   return (
     <li>
       <div className="member-container">
@@ -8,7 +9,7 @@ const ActivityComment = () => {
       </div>
       <h3>Taylor Peat</h3>
       <div className="comment static-comment">
-        <span>The activities are not functional.</span>
+        <span>{comment.text}</span>
       </div>
       <small>
         22 minutes ago - <span className="link">Edit</span> -{" "}

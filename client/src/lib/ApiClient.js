@@ -37,6 +37,10 @@ const apiClient = {
     return axios
       .get(routes.BOARDS_INDEX_URL + `/${boardId}`)
       .then(unwrapData)
+      .then(data => {
+        console.log("we're looking for this", data)
+        return data;
+      })
       .then(callback)
       .catch(logError);
   },
@@ -61,7 +65,6 @@ const apiClient = {
   },
 
   getCard: function (cardId, callback) {
-    console.log("I am insisde the getCard");
     return axios
       .get(routes.FETCH_CARD_URL + `/${cardId}`)
       .then(unwrapData)
@@ -87,6 +90,25 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+
+  deleteCard: function (cardId, callback) {
+    return axios
+      .delete(routes.DELETE_CARD_URL + `/${cardId}`)
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+
+  createComment: function (text, cardId, callback) {
+    return axios
+      .post(routes.CREATE_COMMENT_URL, {
+        cardId,
+        comment: { text }
+      })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  }
 };
 
 export default apiClient;

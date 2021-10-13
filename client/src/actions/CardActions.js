@@ -13,7 +13,6 @@ export function fetchCard(cardId, callback) {
   return (dispatch) => {
     dispatch(fetchCardRequest());
     apiClient.getCard(cardId, (data) => {
-      console.log(data.card);
       dispatch(fetchCardSuccess(data.card));
       if (callback) {
         callback(data.card);
@@ -60,4 +59,24 @@ export function updateCard(card, cardId, callback) {
       }
     });
   };
+}
+
+export function deleteCardRequest() {
+  return { type: types.DELETE_CARD_REQUEST };
+}
+
+export function deleteCardSuccess(card) {
+  return { type: types.DELETE_CARD_SUCCESS, card };
+}
+
+export function deleteCard(cardId, callback) {
+  return (dispatch) => {
+    dispatch(deleteCardRequest());
+    apiClient.deleteCard(cardId, (data) => {
+      dispatch(deleteCardSuccess(data.card));
+      if (callback) {
+        callback(data.card);
+      }
+    });
+  }
 }
