@@ -29,7 +29,11 @@ router.get("/cards/:id", cardsController.getCard);
 router.use(findList);
 
 router.post("/cards", validateCard, cardsController.createCard);
+
 router.put("/cards/:id", validateCard, cardsController.updateCard);
 
+router.delete("/cards/:id", cardsController.deleteCard);
+
 router.post("/comments", validateComment, commentsController.createComment);
+
 module.exports = router;

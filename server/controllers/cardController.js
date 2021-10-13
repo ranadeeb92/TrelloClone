@@ -54,6 +54,14 @@ const updateCard = (req, res, next) => {
   }
 };
 
+const deleteCard = (req, res, next) => {
+  const cardId = req.params.id;
+  Card.findByIdAndDelete(cardId)
+    .then(card => res.json({ card }))
+    .catch(err => next(new HttpError("Deleting card failed, please try again"), 500))
+}
+
 exports.getCard = getCard;
 exports.createCard = createCard;
 exports.updateCard = updateCard;
+exports.deleteCard = deleteCard;
