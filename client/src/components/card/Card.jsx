@@ -9,7 +9,9 @@ import ArchivedBanner from "./ArchivedBanner";
 import LabelsContainer from "../label/LabelsContainer";
 import ArchiveButton from "./ArchiveButton";
 import DeleteButton from "./DeleteButton";
-import AddComment from "../../comments/AddComment";
+import AddComment from "../comments/AddComment";
+import CardDueDate from "../dueDate/CardDueDate";
+import DueDateButton from "../dueDate/DueDateButton";
 
 const Card = () => {
   const history = useHistory();
@@ -29,9 +31,13 @@ const Card = () => {
 
   return (
     <div id="modal-container">
-      <div className="screen" onClick={() => history.push(`/boards/${card.boardId}`)} />
+      <div
+        className="screen"
+        onClick={() => history.push(`/boards/${card.boardId}`)}
+      />
       <div id="modal">
-        <i className="x-icon icon close-modal"
+        <i
+          className="x-icon icon close-modal"
           onClick={() => history.push(`/boards/${card.boardId}`)}
         />
         {card.archived ? <ArchivedBanner /> : null}
@@ -48,19 +54,7 @@ const Card = () => {
             <li className="details-section">
               <ul className="modal-details-list">
                 <LabelsContainer labels={card.labels} />
-                <li className="due-date-section">
-                  <h3>Due Date</h3>
-                  <div id="dueDateDisplay" className="overdue completed">
-                    <input
-                      id="dueDateCheckbox"
-                      type="checkbox"
-                      className="checkbox"
-                      checked=""
-                    />
-                    {card.dueDate}
-                    <span>(past due)</span>
-                  </div>
-                </li>
+                <CardDueDate card={card} />
               </ul>
               <CardDescription card={card} />
             </li>
@@ -80,9 +74,7 @@ const Card = () => {
             <li className="checklist-button">
               <i className="checklist-icon sm-icon"></i>Checklist
             </li>
-            <li className="date-button not-implemented">
-              <i className="clock-icon sm-icon"></i>Due Date
-            </li>
+            <DueDateButton dueDate={card.dueDate} />
             <li className="attachment-button not-implemented">
               <i className="attachment-icon sm-icon"></i>Attachment
             </li>

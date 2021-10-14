@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router";
-import { createComment } from "../actions/CommentActions";
+import { createComment } from "../../actions/CommentActions";
 
 const AddComment = () => {
   const dispatch = useDispatch();
@@ -10,10 +10,12 @@ const AddComment = () => {
 
   const handleAddComment = (e) => {
     e.preventDefault();
-    dispatch(createComment(comment, cardId, () => {
-      setComment("")
-    }));
-  }
+    dispatch(
+      createComment(comment, cardId, () => {
+        setComment("");
+      })
+    );
+  };
 
   return (
     <li className="comment-section">
@@ -40,7 +42,9 @@ const AddComment = () => {
             <div>
               <input
                 type="submit"
-                className={`button ${comment.length > 0 ? null : "not-implemented"}`}
+                className={`button ${
+                  comment.length > 0 ? null : "not-implemented"
+                }`}
                 value="Save"
                 onClick={handleAddComment}
               />

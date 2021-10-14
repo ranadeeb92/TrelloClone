@@ -9,10 +9,10 @@ const getCard = (req, res, next) => {
   const id = req.params.id;
   Card.findById(id)
     .populate({
-      path: "comments"
+      path: "comments",
     })
     .then((card) => {
-      res.json({ card })
+      res.json({ card });
     })
     .catch((err) => next(new HttpError("Card not found", 404)));
 };
@@ -50,6 +50,7 @@ const updateCard = (req, res, next) => {
   let errors = validationResult(req);
   if (errors.isEmpty()) {
     const cardId = req.params.id;
+    console.log(req.body.card);
     Card.findByIdAndUpdate(cardId, { ...req.body.card }, { new: true })
       .then((card) => res.json({ card }))
       .catch((err) =>
@@ -63,9 +64,11 @@ const updateCard = (req, res, next) => {
 const deleteCard = (req, res, next) => {
   const cardId = req.params.id;
   Card.findByIdAndDelete(cardId)
-    .then(card => res.json({ card }))
-    .catch(err => next(new HttpError("Deleting card failed, please try again"), 500))
-}
+    .then((card) => res.json({ card }))
+    .catch((err) =>
+      next(new HttpError("Deleting card failed, please try again"), 500)
+    );
+};
 
 exports.getCard = getCard;
 exports.createCard = createCard;
