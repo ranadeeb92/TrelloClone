@@ -1,5 +1,12 @@
 import React from "react";
-const LabelsPopover = () => {
+import { useDispatch } from "react-redux";
+import { updateCard } from "../../actions/CardActions";
+const LabelsPopover = ({ card, setShowPopover }) => {
+  const dispatch = useDispatch();
+  const handleAddLabel = (e) => {
+    e.preventDefault();
+    dispatch(updateCard({ ...card, labels: card.labels.concat("green") }, card._id, () => setShowPopover(false)))
+  }
   return (
     <div className="popover labels">
       <div id="add-options-labels-dropdown">
@@ -16,7 +23,7 @@ const LabelsPopover = () => {
           <div className="labels-search-results">
             <ul className="label-list">
               <li>
-                <div className="green colorblindable" data-id="1">
+                <div className="green colorblindable" data-id="1" onClick={handleAddLabel}>
                   <i className="check-icon sm-icon"></i>
                 </div>
                 <div className="label-background green"></div>

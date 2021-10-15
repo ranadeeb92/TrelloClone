@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, useHistory } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCard } from "../../actions/CardActions";
+import { fetchCard, updateCard } from "../../actions/CardActions";
 import ActivityContainer from "../../activity/ActivityContainer";
 import CardDescription from "./CardDescription";
 import CardTitle from "./CardTitle";
@@ -10,8 +10,8 @@ import LabelsContainer from "../label/LabelsContainer";
 import ArchiveButton from "./ArchiveButton";
 import DeleteButton from "./DeleteButton";
 import AddComment from "../comments/AddComment";
-import CardDueDate from "../dueDate/CardDueDate";
 import DueDateButton from "../dueDate/DueDateButton";
+import LabelButton from "../label/LabelButton";
 
 const Card = () => {
   const history = useHistory();
@@ -20,6 +20,14 @@ const Card = () => {
   const card = useSelector((state) => {
     return state.cards.find((card) => card._id === id);
   });
+
+  const formatDueDate = (dueDate) => new Date(dueDate).toDateString();
+  const isPastDue = (dueDate) => new Date() > new Date(dueDate);
+
+  const handleUpdateCard = (e) => {
+    e.preventDefault();
+    dispatch(updateCard({ ...card, completed: !card.completed }, id));
+  }
 
   useEffect(() => {
     dispatch(fetchCard(id));
@@ -54,7 +62,22 @@ const Card = () => {
             <li className="details-section">
               <ul className="modal-details-list">
                 <LabelsContainer labels={card.labels} />
-                <CardDueDate card={card} />
+                {card.dueDate ? (
+                  <li className="due-date-section">
+                    <h3>Due Date</h3>
+                    <div id="dueDateDisplay" className={`overdue ${card.completed ? "completed" : ""}`}>
+                      <input
+                        id="dueDateCheckbox"
+                        type="checkbox"
+                        className="checkbox"
+                        checked={card.completed}
+                        onClick={handleUpdateCard}
+                      />
+                      {formatDueDate(card.dueDate)}
+                      {isPastDue(card.dueDate) ? <span>(past due)</span> : null}
+                    </div>
+                  </li>
+                ) : null}
               </ul>
               <CardDescription card={card} />
             </li>
@@ -68,9 +91,7 @@ const Card = () => {
             <li className="member-button">
               <i className="person-icon sm-icon"></i>Members
             </li>
-            <li className="label-button">
-              <i className="label-icon sm-icon"></i>Labels
-            </li>
+            <LabelButton />
             <li className="checklist-button">
               <i className="checklist-icon sm-icon"></i>Checklist
             </li>

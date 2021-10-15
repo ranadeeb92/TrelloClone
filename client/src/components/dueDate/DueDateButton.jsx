@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import DueDatePopover from "./DueDatePopover";
-// import DueDatePopoverFunComponent from "./DueDatePopoverFuncComponent";
 
 const DueDateButton = ({ dueDate }) => {
-  const [showDueDatePopover, setShowDueDatePopover] = useState(false);
-  console.log(dueDate);
+  const [showPopover, setShowPopover] = useState(false);
+
   return (
     <>
-      <li className="date-button" onClick={() => setShowDueDatePopover(true)}>
+      <li className="date-button" onClick={() => setShowPopover(true)}>
         <i className="clock-icon sm-icon"></i>Due Date
       </li>
-      {showDueDatePopover ? <DueDatePopover dueDate={dueDate} /> : null}
-      {/* {showDueDatePopover ? <DueDatePopoverFunComponent /> : null} */}
+      {showPopover ? <DueDatePopover dueDate={dueDate} setShowPopover={setShowPopover} /> : null}
     </>
   );
 };

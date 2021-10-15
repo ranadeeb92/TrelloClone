@@ -8,12 +8,13 @@ const CardTile = ({ card }) => {
         <div className="card ">
           <i className="edit-toggle edit-icon sm-icon"></i>
           <div className="card-info">
-            <div className="card-label green colorblindable"></div>
-            <div className="card-label yellow colorblindable"></div>
+            {card.labels.map(l => <div key={Math.random() * card._id} className={`card-label ${l} colorblindable`} />)}
+
+            {/* <div className="card-label yellow colorblindable"></div>
             <div className="card-label red colorblindable"></div>
             <div className="card-label orange colorblindable"></div>
             <div className="card-label blue colorblindable"></div>
-            <div className="card-label purple colorblindable"></div>
+            <div className="card-label purple colorblindable"></div> */}
             <div>
               <p>{card.title}</p>
             </div>

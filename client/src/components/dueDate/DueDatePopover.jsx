@@ -1,11 +1,40 @@
 import React, { useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router";
 import Pikaday from "pikaday";
 import moment from "moment";
 import { useCallback } from "react";
+import { updateCard } from "../../actions/CardActions";
+
 
 const DueDatePopover = (props) => {
+  const dispatch = useDispatch();
+  const cardId = useParams().id;
   const dateInput = useRef(null);
   const calendar = useRef(null);
+  const card = useSelector((state) =>
+    state.cards.find((c) => c._id === cardId)
+  );
+
+  const getDateTime = (date, time) => {
+    time = moment(time, ["h:mm A"]).format("HH:mm");
+    let dateTime = date + " " + time;
+
+    return new Date(dateTime);
+  }
+
+  const handleUpdateDueDate = (e, remove = false) => {
+    e.preventDefault();
+    let date = e.target.querySelector(".datepicker-select-date input").value;
+    let time = e.target.querySelector(".datepicker-select-time input").value;
+
+    let dueDate = remove ? null : getDateTime(date, time)
+
+    dispatch(updateCard({ ...card, dueDate }, cardId, () => {
+      props.setShowPopover(false);
+    }))
+  }
+
   const defaultMoment = useCallback(() => {
     if (props.dueDate) {
       return moment(props.dueDate);
@@ -19,10 +48,13 @@ const DueDatePopover = (props) => {
       return time;
     }
   }, [props.dueDate]);
+
   const defaultDate = useCallback(() => {
     defaultMoment().toDate();
   }, [defaultMoment]);
+
   useEffect(() => {
+
     const picker = new Pikaday({
       field: dateInput.current,
       bound: false,
@@ -67,14 +99,15 @@ const DueDatePopover = (props) => {
     });
     picker.show();
   }, [defaultDate]);
+
   return (
     <div className="popover due-date">
       <header>
         <span>Change due date</span>
-        <a href="#" className="icon-sm icon-close"></a>
+        <a href="#" className="icon-sm icon-close" onClick={() => props.setShowPopover(false)}></a>
       </header>
       <div className="content">
-        <form>
+        <form onSubmit={handleUpdateDueDate} onReset={(e) => handleUpdateDueDate(e, true)}>
           <div className="datepicker-select">
             <div className="datepicker-select-date">
               <label>

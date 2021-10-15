@@ -10,7 +10,7 @@ import Card from "./card/Card";
 import CopyCardPopover from "./ui/CopyCardPopover";
 import CreateBoard from "./ui/CreateBoard";
 import DueDatePopover from "./dueDate/DueDatePopover";
-import LabelsPopover from "./ui/LabelsPopover";
+import LabelsPopover from "./label/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./board/SingleBoard";
 
